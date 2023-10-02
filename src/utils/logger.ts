@@ -31,6 +31,6 @@ export const logger = createLogger({
   ),
   transports: [
     new transports.Console(),
-    new transports.File({ filename: join(__dirname, "..", "..", "logs", "combined.log") })
+    new transports.File({ filename: join(__dirname, "..", "..", "logs", new Date()+".log") })
   ]
 });
