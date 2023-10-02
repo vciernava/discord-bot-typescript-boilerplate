@@ -74,7 +74,7 @@ export interface Command {
   default_member_permissions?: PermissionFlags;
   dm_permission?: boolean;
   options?: ApplicationCommandOption[];
-  ephemeral?: boolean | null;
+  ephemeral?: boolean;
   nsfw?: boolean;
   run: (interaction: CommandInteraction) => Promise<void>;
 }

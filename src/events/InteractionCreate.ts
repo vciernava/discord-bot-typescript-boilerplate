@@ -1,6 +1,7 @@
 // Handle the interactionCreate event
 // Path: src/events/InteractionCreate.ts
 
+import { DiscordjsError } from "discord.js";
 import { Event, Events } from "../interfaces/Event";
 import { logger } from "../utils/logger";
 
@@ -15,17 +16,25 @@ export default <Event>{
 
     const command = bot.commands.get(interaction.commandName);
 
-    if (!command) return;
+    if (!command) {
+      logger.error(`No command matching ${interaction.commandName} was found.`);
+      return;
+    }
+
     try {
-      if (command.ephemeral === true) {
+      if(command.ephemeral) {
         await interaction.deferReply({ ephemeral: true });
-      } else if (command.ephemeral === false) {
-        await interaction.deferReply({ ephemeral: false });
       }
+
       await command.run(interaction);
     } catch (error) {
+      logger.error(`Error executing ${interaction.commandName} command`);
       logger.error(error);
-      await interaction.reply({ ephemeral: true, content: "There was an error while executing this command!" });
+        if(interaction.replied || interaction.deferred) {
+          await interaction.followUp({ content: "An error occurred while executing this command.", ephemeral: true });
+        } else {
+          await interaction.reply({ content: "An error occurred while executing this command.", ephemeral: true });
+        }
     }
   }
 };

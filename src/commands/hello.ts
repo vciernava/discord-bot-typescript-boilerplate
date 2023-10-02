@@ -2,7 +2,7 @@
 // Path: src/commands/hello.ts
 
 /**
- * When using ephemeral commands, you can't use interaction.reply() directly.
+ * When using ephemeral commands, you can't use await interaction.reply() directly.
  */
 
 import { Command } from "../interfaces/Command";
@@ -12,6 +12,6 @@ export default <Command>{
   description: "Say hello to the bot!",
   ephemeral: true,
   run: async (interaction) => {
-    interaction.editReply("Hello!");
+    await interaction.reply("Hello!")
   },
 };

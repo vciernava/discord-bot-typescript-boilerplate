@@ -1,11 +1,6 @@
 // Handle echo command
 // Path: src/commands/echo.ts
 
-/**
- * If you want to defer the reply for longer operations, you can use ephemeral: false and then interaction.editReply()
- * otherwise, you do not need to include ephmeral at all.
- */
-
 import { Command, ApplicationCommandOptionType } from "../interfaces/Command";
 
 export default <Command>{
@@ -33,9 +28,8 @@ export default <Command>{
       required: true,
     },
   ],
-  ephemeral: false,
   run: async (interaction) => {
     const text = interaction.options.get("text")?.value as string;
-    interaction.editReply(text);
+    await interaction.reply(text);
   },
 };

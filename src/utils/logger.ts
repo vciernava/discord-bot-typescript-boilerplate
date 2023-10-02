@@ -16,21 +16,22 @@ import { join } from "path";
 
 config();
 
-const { combine, timestamp, label, printf, colorize } = format;
+const { combine, timestamp, label, printf } = format;
 
 const myFormat = printf(({ level, message, label, timestamp }) => {
-  return `${timestamp} [${label}] ${level}: ${message}`;
+  return `${timestamp} [${level}] ${label}: ${message}`;
 });
 
 export const logger = createLogger({
   format: combine(
-    colorize(),
     label({ label: process.env.BOT_NAME }),
     timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
     myFormat
   ),
   transports: [
-    new transports.Console(),
-    new transports.File({ filename: join(__dirname, "..", "..", "logs", new Date()+".log") })
+    new transports.Console({ format: format.combine(format.colorize(), myFormat) }),
+    new transports.File({ 
+      filename: join(__dirname, "..", "..", "logs", `${new Date().toISOString().slice(0, 10)}.log`) 
+    })
   ]
 });
