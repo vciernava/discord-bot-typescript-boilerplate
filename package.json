@@ -1,0 +1,20 @@
+{
+  "name": "quinto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx ts-node src/main"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "prisma": "^5.3.1",
+    "typescript": "^5.2.2",
+    "winston": "^3.10.0"
+  }
+}
