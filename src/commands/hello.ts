@@ -12,6 +12,6 @@ export default <Command>{
   description: "Say hello to the bot!",
   ephemeral: true,
   run: async (interaction) => {
-    await interaction.reply("Hello!")
+    await interaction.editReply("Hello!")
   },
 };
