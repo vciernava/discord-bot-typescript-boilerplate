@@ -1,11 +1,11 @@
 // Handle the ready event
 // Path: src/events/ready.ts
 
-import { Routes } from "discord.js";
-import { REST } from "@discordjs/rest";
-import { config } from "dotenv";
-import { logger } from "../utils/logger";
-import { Event, Events } from "../interfaces/Event";
+import { Routes } from 'discord.js';
+import { REST } from '@discordjs/rest';
+import { config } from 'dotenv';
+import { logger } from '../utils/logger';
+import { Event, Events } from '../interfaces/Event';
 
 config();
 
@@ -17,7 +17,7 @@ export default <Event>{
      */
 
     const rest = new REST({
-      version: '10'
+      version: '10',
     }).setToken(process.env.TOKEN || '');
     const commands = [];
 
@@ -27,23 +27,35 @@ export default <Event>{
       }
     }
 
-    if (process.env.GUILD_ID && bot.user?.id) {
+    if (
+      process.env.GUILD_ID &&
+      bot.user?.id &&
+      process.env.NODE_ENV === 'development'
+    ) {
       await rest.put(
         Routes.applicationGuildCommands(bot.user.id, process.env.GUILD_ID),
         { body: commands }
       );
 
-      logger.info("Successfully registered application commands.");
+      logger.info('Successfully registered application commands.');
+    } else if (!process.env.GUILD_ID || !bot.user?.id) {
+      logger.warn(
+        'Failed to register application commands. Missing GUILD_ID or bot user ID.'
+      );
     } else {
-      logger.warn("Failed to register application commands. Missing GUILD_ID or bot user ID.");
+      await rest.put(Routes.applicationCommands(bot.user.id), {
+        body: commands,
+      });
+
+      logger.info('Successfully registered global application commands.');
     }
 
-    logger.info("Bot is ready!");
+    logger.info('Bot is ready!');
 
     /**
      * You can edit the code below to change what the bot is doing when it is ready.
      */
 
-    bot.user?.setActivity("Hello world!");
-  }
+    bot.user?.setActivity('Hello world!');
+  },
 };
