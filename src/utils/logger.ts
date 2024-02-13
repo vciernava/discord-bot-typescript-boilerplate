@@ -10,9 +10,9 @@
 // logger.silly("Hello world!");
 // Path: src/utils/logger.ts
 
-import { createLogger, format, transports } from "winston";
-import { config } from "dotenv";
-import { join } from "path";
+import { createLogger, format, transports } from 'winston';
+import { config } from 'dotenv';
+import { join } from 'path';
 
 config();
 
@@ -25,13 +25,21 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
 export const logger = createLogger({
   format: combine(
     label({ label: process.env.BOT_NAME }),
-    timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+    timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
     myFormat
   ),
   transports: [
-    new transports.Console({ format: format.combine(format.colorize(), myFormat) }),
-    new transports.File({ 
-      filename: join(__dirname, "..", "..", "logs", `${new Date().toISOString().slice(0, 10)}.log`) 
-    })
-  ]
+    new transports.Console({
+      format: format.combine(format.colorize(), myFormat),
+    }),
+    new transports.File({
+      filename: join(
+        __dirname,
+        '..',
+        '..',
+        'logs',
+        `${new Date().toISOString().slice(0, 10)}.log`
+      ),
+    }),
+  ],
 });

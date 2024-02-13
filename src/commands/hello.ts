@@ -5,13 +5,13 @@
  * When using ephemeral commands, you can't use await interaction.reply() directly.
  */
 
-import { Command } from "../interfaces/Command";
+import { Command } from '../interfaces/Command';
 
 export default <Command>{
-  name: "hello",
-  description: "Say hello to the bot!",
+  name: 'hello',
+  description: 'Say hello to the bot!',
   ephemeral: true,
   run: async (interaction) => {
-    await interaction.editReply("Hello!")
+    await interaction.editReply('Hello!');
   },
 };

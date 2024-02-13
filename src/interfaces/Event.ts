@@ -1,9 +1,9 @@
-import { Events, Interaction } from "discord.js";
-import { ClientWithCommands } from "./ClientWithCommands";
+import { Events } from 'discord.js';
+import { ClientWithCommands } from './ClientWithCommands';
 
-export interface Event{
+export interface Event {
   name: Events;
-  run: (bot: ClientWithCommands, interaction: Interaction, ...args: any[]) => Promise<void>;
+  run: (bot: ClientWithCommands, any: any) => Promise<void>;
 }
 
-export { Events }
+export { Events };

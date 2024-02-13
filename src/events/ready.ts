@@ -1,11 +1,11 @@
 // Handle the ready event
 // Path: src/events/ready.ts
 
-import { Routes } from 'discord.js';
 import { REST } from '@discordjs/rest';
+import { Routes } from 'discord.js';
 import { config } from 'dotenv';
-import { logger } from '../utils/logger';
 import { Event, Events } from '../interfaces/Event';
+import { logger } from '../utils/logger';
 
 config();
 
